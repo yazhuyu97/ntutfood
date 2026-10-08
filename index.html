@@ -1,0 +1,6641 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+NTUT Food｜AI 北科美食推薦
+</title>
+
+
+<style>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+:root{
+
+    --orange:#ff8c42;
+
+    --orange-light:#fff1e5;
+
+    --yellow:#ffd166;
+
+    --green:#5cb85c;
+
+    --red:#ff6464;
+
+    --dark:#292929;
+
+    --gray:#777;
+
+    --light:#f7f7f7;
+
+    --white:#fff;
+
+    --border:#e8e8e8;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,.08);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+
+body{
+
+    font-family:
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        Arial,
+        sans-serif;
+
+    background:var(--light);
+
+    color:var(--dark);
+
+}
+
+
+button,
+input,
+select,
+textarea{
+
+    font-family:inherit;
+
+}
+
+
+button{
+
+    cursor:pointer;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+    background:white;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.header-inner{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:14px 20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.logo{
+
+    font-size:23px;
+
+    font-weight:900;
+
+}
+
+
+.logo span{
+
+    color:var(--orange);
+
+}
+
+
+.user-pill{
+
+    border:0;
+
+    background:var(--orange-light);
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main{
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:
+        25px
+        20px
+        100px;
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0dd,
+            #fffaf4
+        );
+
+    border-radius:28px;
+
+    padding:35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+
+.hero h1{
+
+    font-size:38px;
+
+    margin-bottom:10px;
+
+}
+
+
+.hero p{
+
+    color:var(--gray);
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+
+}
+
+
+.hero-cat{
+
+    font-size:90px;
+
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+.primary-btn{
+
+    border:0;
+
+    background:var(--orange);
+
+    color:white;
+
+    padding:
+        13px
+        22px;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+}
+
+
+.primary-btn:hover{
+
+    opacity:.9;
+
+}
+
+
+.secondary-btn{
+
+    border:
+        1px solid var(--border);
+
+    background:white;
+
+    padding:
+        10px
+        16px;
+
+    border-radius:12px;
+
+}
+
+
+/* =========================================================
+   AI
+========================================================= */
+
+.ai-section{
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:25px;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:30px;
+
+}
+
+
+.ai-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:8px;
+
+}
+
+
+.ai-avatar{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    background:var(--orange-light);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+}
+
+
+.ai-description{
+
+    color:var(--gray);
+
+    margin-bottom:20px;
+
+}
+
+
+.chat-box{
+
+    background:#f8f8f8;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    min-height:170px;
+
+    max-height:350px;
+
+    overflow-y:auto;
+
+    margin-bottom:15px;
+
+}
+
+
+.message{
+
+    display:flex;
+
+    margin-bottom:15px;
+
+}
+
+
+.message.ai{
+
+    justify-content:flex-start;
+
+}
+
+
+.message.user{
+
+    justify-content:flex-end;
+
+}
+
+
+.message-bubble{
+
+    max-width:80%;
+
+    padding:
+        12px
+        15px;
+
+    border-radius:16px;
+
+    line-height:1.6;
+
+}
+
+
+.message.ai
+.message-bubble{
+
+    background:white;
+
+    border:
+        1px solid var(--border);
+
+}
+
+
+.message.user
+.message-bubble{
+
+    background:var(--orange);
+
+    color:white;
+
+}
+
+
+.chat-input{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+
+.chat-input input{
+
+    flex:1;
+
+    padding:14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+
+.chat-input input:focus{
+
+    border-color:var(--orange);
+
+}
+
+
+.quick-prompts{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-top:12px;
+
+}
+
+
+.quick-prompt{
+
+    border:
+        1px solid #ddd;
+
+    background:white;
+
+    padding:
+        8px
+        12px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+}
+
+
+/* =========================================================
+   AI UNDERSTANDING
+========================================================= */
+
+.ai-understanding{
+
+    display:none;
+
+    background:#fff8e8;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-top:18px;
+
+}
+
+
+.ai-understanding.show{
+
+    display:block;
+
+}
+
+
+.tag-list{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-top:10px;
+
+}
+
+
+.tag{
+
+    background:white;
+
+    border:
+        1px solid #eee;
+
+    padding:
+        7px
+        11px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+}
+
+
+/* =========================================================
+   AI RESULTS
+========================================================= */
+
+.ai-results{
+
+    display:none;
+
+    margin-top:20px;
+
+}
+
+
+.ai-results.show{
+
+    display:block;
+
+}
+
+
+.result-title{
+
+    margin-bottom:15px;
+
+}
+
+
+.result-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+}
+
+
+.result-card{
+
+    background:white;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+
+.result-image{
+
+    height:130px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:60px;
+
+    background:var(--orange-light);
+
+}
+
+
+.result-body{
+
+    padding:15px;
+
+}
+
+
+.result-rank{
+
+    font-size:13px;
+
+    color:var(--orange);
+
+    font-weight:bold;
+
+    margin-bottom:5px;
+
+}
+
+
+.result-body h3{
+
+    margin-bottom:7px;
+
+}
+
+
+.result-meta{
+
+    color:var(--gray);
+
+    font-size:13px;
+
+    margin-bottom:8px;
+
+}
+
+
+.ai-reason{
+
+    background:#f8f8f8;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    margin-top:10px;
+
+}
+
+
+.result-actions{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:12px;
+
+}
+
+
+.result-actions button{
+
+    flex:1;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-area{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-bottom:15px;
+
+}
+
+
+.search-area input{
+
+    flex:1;
+
+    border:
+        1px solid var(--border);
+
+    padding:14px;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+}
+
+
+.search-area button{
+
+    border:0;
+
+    background:var(--dark);
+
+    color:white;
+
+    padding:
+        0
+        20px;
+
+    border-radius:14px;
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+.filters{
+
+    display:flex;
+
+    gap:8px;
+
+    overflow-x:auto;
+
+    padding-bottom:10px;
+
+    margin-bottom:25px;
+
+}
+
+
+.filter-btn{
+
+    border:
+        1px solid #ddd;
+
+    background:white;
+
+    padding:
+        9px
+        15px;
+
+    border-radius:20px;
+
+    white-space:nowrap;
+
+}
+
+
+.filter-btn.active{
+
+    background:var(--orange);
+
+    color:white;
+
+    border-color:var(--orange);
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+}
+
+
+.stat{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:18px;
+
+}
+
+
+.stat-label{
+
+    color:var(--gray);
+
+    font-size:13px;
+
+}
+
+
+.stat-number{
+
+    font-size:27px;
+
+    font-weight:bold;
+
+    margin-top:5px;
+
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section{
+
+    margin-bottom:35px;
+
+}
+
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+}
+
+
+.section-title h2{
+
+    font-size:21px;
+
+}
+
+
+.section-title button{
+
+    border:0;
+
+    background:none;
+
+    color:var(--orange);
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================================
+   RESTAURANT CARD
+========================================================= */
+
+.restaurant-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:16px;
+
+}
+
+
+.restaurant-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.05);
+
+    transition:.2s;
+
+}
+
+
+.restaurant-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.food-image{
+
+    height:140px;
+
+    background:var(--orange-light);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:60px;
+
+    position:relative;
+
+}
+
+
+.private-tag{
+
+    position:absolute;
+
+    top:9px;
+
+    left:9px;
+
+    background:#292929;
+
+    color:white;
+
+    padding:
+        5px
+        9px;
+
+    border-radius:12px;
+
+    font-size:11px;
+
+}
+
+
+.favorite{
+
+    position:absolute;
+
+    right:9px;
+
+    top:9px;
+
+    width:34px;
+
+    height:34px;
+
+    border:0;
+
+    background:white;
+
+    border-radius:50%;
+
+    font-size:18px;
+
+    z-index:2;
+
+}
+
+
+.favorite.active{
+
+    color:#ff4d6d;
+
+}
+
+
+.card-body{
+
+    padding:14px;
+
+}
+
+
+.card-body h3{
+
+    margin-bottom:7px;
+
+}
+
+
+.card-meta{
+
+    color:var(--gray);
+
+    font-size:12px;
+
+    margin-bottom:7px;
+
+}
+
+
+.rating{
+
+    color:#f3a623;
+
+    font-weight:bold;
+
+}
+
+
+.card-bottom{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:10px;
+
+}
+
+
+.detail-btn{
+
+    border:0;
+
+    background:#f1f1f1;
+
+    padding:
+        7px
+        10px;
+
+    border-radius:9px;
+
+}
+
+
+/* =========================================================
+   RECOMMEND BOX
+========================================================= */
+
+.recommend-box{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.recommend-box p{
+
+    color:var(--gray);
+
+    margin:
+        10px
+        0
+        20px;
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.5);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:20px;
+
+    z-index:500;
+
+}
+
+
+.modal.show{
+
+    display:flex;
+
+}
+
+
+.modal-content{
+
+    width:min(600px,100%);
+
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:25px;
+
+    animation:
+        modalIn .2s ease;
+
+}
+
+
+@keyframes modalIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(15px)
+            scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+
+.close{
+
+    border:0;
+
+    background:#eee;
+
+    width:35px;
+
+    height:35px;
+
+    border-radius:50%;
+
+}
+
+
+.close:hover{
+
+    background:#ddd;
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group{
+
+    margin-bottom:15px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+    padding:12px;
+
+    outline:none;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:var(--orange);
+
+}
+
+
+.form-group textarea{
+
+    min-height:100px;
+
+}
+
+
+/* =========================================================
+   FAVORITE LIST
+========================================================= */
+
+.favorite-empty{
+
+    text-align:center;
+
+    padding:35px 10px;
+
+    color:#999;
+
+}
+
+
+.favorite-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:13px 0;
+
+    border-bottom:
+        1px solid #eee;
+
+}
+
+
+.favorite-item:last-child{
+
+    border-bottom:0;
+
+}
+
+
+.favorite-icon{
+
+    width:55px;
+
+    height:55px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--orange-light);
+
+    border-radius:14px;
+
+    font-size:28px;
+
+}
+
+
+.favorite-info{
+
+    flex:1;
+
+}
+
+
+.favorite-info h3{
+
+    font-size:16px;
+
+    margin-bottom:4px;
+
+}
+
+
+.favorite-info p{
+
+    color:var(--gray);
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+.favorite-open{
+
+    border:0;
+
+    background:#f1f1f1;
+
+    padding:
+        8px
+        11px;
+
+    border-radius:9px;
+
+    white-space:nowrap;
+
+}
+
+
+.favorite-remove{
+
+    border:0;
+
+    background:white;
+
+    font-size:18px;
+
+    color:#ff4d6d;
+
+}
+
+
+/* =========================================================
+   DETAIL
+========================================================= */
+
+.detail-hero{
+
+    font-size:90px;
+
+    text-align:center;
+
+    background:var(--orange-light);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    margin-bottom:18px;
+
+}
+
+
+.detail-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+}
+
+
+.detail-title h2{
+
+    font-size:25px;
+
+}
+
+
+.detail-favorite{
+
+    border:0;
+
+    background:var(--orange-light);
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    font-size:21px;
+
+}
+
+
+.detail-info{
+
+    color:var(--gray);
+
+    margin:
+        8px
+        0
+        15px;
+
+    line-height:1.8;
+
+}
+
+
+.detail-box{
+
+    background:#f8f8f8;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    margin-top:12px;
+
+    line-height:1.7;
+
+}
+
+
+.comment{
+
+    border-top:
+        1px solid #eee;
+
+    padding:13px 0;
+
+}
+
+
+.comment:first-child{
+
+    border-top:0;
+
+}
+
+
+.comment-user{
+
+    font-weight:bold;
+
+}
+
+
+.comment-text{
+
+    color:#777;
+
+    margin-top:5px;
+
+    line-height:1.6;
+
+}
+
+
+/* =========================================================
+   MY PAGE
+========================================================= */
+
+.my-page-modal{
+
+    width:min(700px,100%);
+
+}
+
+
+.profile-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff0dd,
+            #fffaf4
+        );
+
+    border-radius:20px;
+
+    padding:22px;
+
+    margin-bottom:16px;
+
+}
+
+
+.profile-avatar{
+
+    width:72px;
+
+    height:72px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:white;
+
+    font-size:42px;
+
+}
+
+
+.profile-info{
+
+    flex:1;
+
+}
+
+
+.profile-info h2{
+
+    margin-bottom:4px;
+
+}
+
+
+.profile-info p{
+
+    color:var(--gray);
+
+    font-size:13px;
+
+    margin-bottom:10px;
+
+}
+
+
+.profile-stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-bottom:20px;
+
+}
+
+
+.profile-stats div{
+
+    background:#f8f8f8;
+
+    border-radius:15px;
+
+    padding:
+        15px
+        10px;
+
+    text-align:center;
+
+}
+
+
+.profile-stats strong{
+
+    display:block;
+
+    font-size:24px;
+
+}
+
+
+.profile-stats span{
+
+    color:var(--gray);
+
+    font-size:12px;
+
+}
+
+
+.my-section{
+
+    margin-top:20px;
+
+}
+
+
+.my-section-title{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:10px;
+
+}
+
+
+.my-section-title span{
+
+    color:var(--gray);
+
+    font-size:12px;
+
+}
+
+
+.history-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px 0;
+
+    border-bottom:
+        1px solid #eee;
+
+}
+
+
+.history-item:last-child{
+
+    border-bottom:0;
+
+}
+
+
+.history-icon{
+
+    width:52px;
+
+    height:52px;
+
+    flex-shrink:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--orange-light);
+
+    border-radius:13px;
+
+    font-size:27px;
+
+}
+
+
+.history-main{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+
+.history-main h4{
+
+    margin-bottom:4px;
+
+}
+
+
+.history-main p{
+
+    color:var(--gray);
+
+    font-size:12px;
+
+    margin-bottom:4px;
+
+    line-height:1.5;
+
+}
+
+
+.history-main small{
+
+    color:#999;
+
+    font-size:11px;
+
+}
+
+
+.empty-history{
+
+    text-align:center;
+
+    color:#999;
+
+    padding:25px 10px;
+
+    line-height:1.8;
+
+}
+
+
+.account-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    margin-top:25px;
+
+    padding-top:18px;
+
+    border-top:
+        1px solid #eee;
+
+}
+
+
+.account-actions button{
+
+    flex:1;
+
+}
+
+
+.danger-btn{
+
+    color:#d9534f;
+
+    border-color:#d9534f;
+
+}
+
+.check-btn{
+    color: #5cb85c;
+
+    border-color: #5cb85c;
+}
+
+.edit-btn{
+    color: #f3a623;
+
+    border-color: #f3a623;
+}
+
+.warning{
+    color: #d9534f;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+========================================================= */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    right:0;
+
+    height:65px;
+
+    background:white;
+
+    border-top:
+        1px solid var(--border);
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:70px;
+
+    align-items:center;
+
+    z-index:200;
+
+}
+
+
+.bottom-nav button{
+
+    border:0;
+
+    background:none;
+
+    color:#777;
+
+    font-size:12px;
+
+}
+
+
+.bottom-nav button.active{
+
+    color:var(--orange);
+
+    font-weight:bold;
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+
+    position:fixed;
+
+    bottom:85px;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    background:#222;
+
+    color:white;
+
+    padding:
+        12px
+        20px;
+
+    border-radius:20px;
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:.3s;
+
+    z-index:1000;
+
+}
+
+
+.toast.show{
+
+    opacity:1;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    .hero h1{
+
+        font-size:28px;
+
+    }
+
+
+    .hero-cat{
+
+        font-size:60px;
+
+    }
+
+
+    .restaurant-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+
+    .result-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:550px){
+
+    main{
+
+        padding:
+            15px
+            12px
+            90px;
+
+    }
+
+
+    .hero{
+
+        padding:23px;
+
+    }
+
+
+    .hero-cat{
+
+        font-size:45px;
+
+    }
+
+
+    .hero h1{
+
+        font-size:24px;
+
+    }
+
+
+    .restaurant-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:10px;
+
+    }
+
+
+    .food-image{
+
+        height:105px;
+
+        font-size:48px;
+
+    }
+
+
+    .card-body{
+
+        padding:10px;
+
+    }
+
+
+    .bottom-nav{
+
+        justify-content:space-around;
+
+        gap:0;
+
+    }
+
+
+    .profile-card{
+
+        padding:16px;
+
+    }
+
+
+    .profile-avatar{
+
+        width:60px;
+
+        height:60px;
+
+        font-size:34px;
+
+    }
+
+
+    .history-item{
+
+        align-items:flex-start;
+
+    }
+
+
+    .account-actions{
+
+        flex-direction:column;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+
+🍚 <span>NTUT</span> Food
+
+</div>
+
+
+<button
+    class="user-pill"
+    id="headerUser"
+    onclick="showMyPage()"
+>
+
+👋 北科吃貨
+
+</button>
+
+</div>
+
+</header>
+
+
+
+<main>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+<div>
+
+<h1>
+
+今天吃什麼？🍜
+
+</h1>
+
+
+<p>
+
+北科大學生的 AI 美食助手。<br>
+
+直接告訴我你想吃什麼，我幫你選。
+
+</p>
+
+
+<button
+    class="primary-btn"
+    onclick="focusAI()"
+>
+
+🤖 問問 AI
+
+</button>
+
+</div>
+
+
+<div class="hero-cat">
+
+🐱
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AI
+===================================================== -->
+
+<section
+    class="ai-section"
+    id="aiSection"
+>
+
+<div class="ai-title">
+
+<div class="ai-avatar">
+
+🐱
+
+</div>
+
+
+<div>
+
+<h2>
+
+北科吃貨 AI
+
+</h2>
+
+</div>
+
+</div>
+
+
+<p class="ai-description">
+
+不用填一堆選項，直接跟我說你今天想吃什麼。
+
+</p>
+
+
+<div
+    class="chat-box"
+    id="chatBox"
+>
+
+<div class="message ai">
+
+<div class="message-bubble">
+
+嗨！我是北科吃貨 🐱<br>
+
+告訴我你的預算、口味、距離或今天的心情吧！<br><br>
+
+例如：<br>
+
+「我今天只有 120 元，不想走太遠，想吃辣的。」
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="chat-input">
+
+<input
+    id="aiInput"
+    type="text"
+    placeholder="例如：我只有100元，想吃麵，不想走超過5分鐘..."
+    onkeydown="
+        if(event.key==='Enter')
+        sendAIMessage();
+    "
+>
+
+
+<button
+    class="primary-btn"
+    onclick="sendAIMessage()"
+>
+
+送出
+
+</button>
+
+</div>
+
+
+<div class="quick-prompts">
+
+<button
+    class="quick-prompt"
+    onclick="
+        setPrompt('我只有100元，想吃飽')
+    "
+>
+
+💸 月底沒錢
+
+</button>
+
+
+<button
+    class="quick-prompt"
+    onclick="
+        setPrompt('我想吃辣的')
+    "
+>
+
+🌶️ 想吃辣
+
+</button>
+
+
+<button
+    class="quick-prompt"
+    onclick="
+        setPrompt('我不想走超過5分鐘')
+    "
+>
+
+🚶 不想走太遠
+
+</button>
+
+
+<button
+    class="quick-prompt"
+    onclick="
+        setPrompt('我今天想吃好一點')
+    "
+>
+
+😋 今天想吃好一點
+
+</button>
+
+</div>
+
+
+<div
+    class="ai-understanding"
+    id="aiUnderstanding"
+>
+
+<strong>
+
+🧠 我理解你的需求：
+
+</strong>
+
+
+<div
+    class="tag-list"
+    id="understandingTags"
+></div>
+
+</div>
+
+
+<div
+    class="ai-results"
+    id="aiResults"
+>
+
+<h3 class="result-title">
+
+🏆 為你找到這些
+
+</h3>
+
+
+<div
+    class="result-grid"
+    id="aiResultGrid"
+></div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SEARCH
+===================================================== -->
+
+<div class="search-area">
+
+<input
+    id="searchInput"
+    placeholder="搜尋餐廳、料理..."
+    oninput="renderRestaurants()"
+>
+
+
+<button
+    onclick="renderRestaurants()"
+>
+
+搜尋
+
+</button>
+
+</div>
+
+
+
+<!-- =====================================================
+     FILTER
+===================================================== -->
+
+<div class="filters">
+
+<button
+    class="filter-btn active"
+    onclick="filterCategory('全部',this)"
+>
+
+全部
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('台式',this)"
+>
+
+🍱 台式
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('麵食',this)"
+>
+
+🍜 麵食
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('日式',this)"
+>
+
+🍣 日式
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('西式',this)"
+>
+
+🍔 西式
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('小吃',this)"
+>
+
+🥟 小吃
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('甜點',this)"
+>
+
+🍰 甜點
+
+</button>
+
+
+<button
+    class="filter-btn"
+    onclick="filterCategory('咖啡',this)"
+>
+
+☕ 咖啡
+
+</button>
+
+</div>
+
+
+
+<!-- =====================================================
+     STATS
+===================================================== -->
+
+<section class="stats">
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+平台餐廳
+
+</div>
+
+
+<div
+    class="stat-number"
+    id="restaurantCount"
+>
+
+0
+
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+學生推薦
+
+</div>
+
+
+<div
+    class="stat-number"
+    id="recommendCount"
+>
+
+0
+
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+我的收藏
+
+</div>
+
+
+<div
+    class="stat-number"
+    id="favoriteCount"
+>
+
+0
+
+</div>
+
+</div>
+
+
+
+<div class="stat">
+
+<div class="stat-label">
+
+學生私藏
+
+</div>
+
+
+<div
+    class="stat-number"
+    id="privateCount"
+>
+
+0
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOT
+===================================================== -->
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>
+
+🔥 北科熱門
+
+</h2>
+
+
+<button onclick="sortByRating()">
+
+最高評分 →
+
+</button>
+
+</div>
+
+
+<div
+    class="restaurant-grid"
+    id="restaurantGrid"
+></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     PRIVATE
+===================================================== -->
+
+<section class="section">
+
+<div class="section-title">
+
+<h2>
+
+🤫 北科學生私藏
+
+</h2>
+
+</div>
+
+
+<div
+    class="restaurant-grid"
+    id="privateGrid"
+></div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RECOMMEND
+===================================================== -->
+
+<section class="recommend-box">
+
+<h2>
+
+📣 發現一家好吃的？
+
+</h2>
+
+
+<p>
+
+推薦給其他北科學生，一起建立北科美食地圖！
+
+</p>
+
+
+<button
+    class="primary-btn"
+    onclick="openRecommendModal()"
+>
+
+＋ 推薦一家餐廳
+
+</button>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     BOTTOM NAV
+===================================================== -->
+
+<nav class="bottom-nav">
+
+
+<button
+    class="active"
+    onclick="goHome()"
+>
+
+🏠<br>
+
+首頁
+
+</button>
+
+
+<button
+    onclick="focusSearch()"
+>
+
+🔍<br>
+
+找美食
+
+</button>
+
+
+<button
+    onclick="openRecommendModal()"
+>
+
+➕<br>
+
+推薦
+
+</button>
+
+
+<button
+    onclick="showFavorites()"
+>
+
+❤️<br>
+
+收藏
+
+</button>
+
+
+<button
+    onclick="showMyPage()"
+>
+
+👤<br>
+
+我的
+
+</button>
+
+</nav>
+
+
+
+<!-- =====================================================
+     RECOMMEND MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="recommendModal"
+>
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>
+
+推薦一家餐廳吧
+
+</h2>
+
+
+<button
+    class="close"
+    onclick="closeModal('recommendModal')"
+>
+
+✕
+
+</button>
+
+</div>
+
+
+<form
+    onsubmit="submitRecommendation(event)"
+>
+
+
+<div class="form-group">
+
+<label>
+
+<span class="warning">*</span>餐廳名稱 
+
+</label>
+
+
+<input
+    id="newName"
+    required
+    placeholder="例如：山東牛肉麵"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+<span class="warning">*</span>料理類型
+
+</label>
+
+
+<select
+    id="newCategory"
+    required
+>
+
+<option value="">
+
+請選擇
+
+</option>
+
+
+<option value="台式">
+
+🍱 台式
+
+</option>
+
+
+<option value="麵食">
+
+🍜 麵食
+
+</option>
+
+
+<option value="日式">
+
+🍣 日式
+
+</option>
+
+
+<option value="西式">
+
+🍔 西式
+
+</option>
+
+
+<option value="小吃">
+
+🥟 小吃
+
+</option>
+
+
+<option value="甜點">
+
+🍰 甜點
+
+</option>
+
+
+<option value="咖啡">
+
+☕ 咖啡
+
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+平均價格
+
+</label>
+
+
+<input
+    id="newPrice"
+    type="number"
+    placeholder="例如：120"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+距離北科幾分鐘？
+
+</label>
+
+
+<input
+    id="newDistance"
+    type="number"
+    placeholder="例如：5"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+推薦餐點
+
+</label>
+
+
+<input
+    id="newDish"
+    placeholder="例如：招牌牛肉麵"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+<span class="warning">*</span>推薦理由
+
+</label>
+
+
+<textarea
+    id="newReason"
+    required
+    placeholder="這家為什麼值得推薦？"
+></textarea>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+評分
+
+</label>
+
+
+<select id="newRating">
+
+<option value="5">
+
+⭐⭐⭐⭐⭐ 5.0
+
+</option>
+
+<option value="4">
+
+⭐⭐⭐⭐ 4.0
+
+</option>
+
+<option value="3">
+
+⭐⭐⭐ 3.0
+
+</option>
+
+<option value="2">
+
+⭐⭐ 2.0
+
+</option>
+
+<option value="1">
+
+⭐ 1.0
+
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+
+是否列入學生私藏？
+
+</label>
+
+
+<select id="newPrivate">
+
+<option value="yes">
+
+🤫 是
+
+</option>
+
+
+<option value="no">
+
+一般推薦
+
+</option>
+
+</select>
+
+</div>
+
+
+<button
+    class="primary-btn"
+    style="width:100%"
+    type="submit"
+>
+
+🚀 發布推薦
+
+</button>
+
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     FAVORITE MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="favoriteModal"
+>
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>
+
+❤️ 我的收藏
+
+</h2>
+
+
+<button
+    class="close"
+    onclick="closeModal('favoriteModal')"
+>
+
+✕
+
+</button>
+
+</div>
+
+
+<div id="favoriteContent">
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     DETAIL MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="detailModal"
+>
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>
+
+🍜 餐廳資訊
+
+</h2>
+
+
+<button
+    class="close"
+    onclick="closeModal('detailModal')"
+>
+
+✕
+
+</button>
+
+</div>
+
+
+<div id="detailContent">
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MY PAGE MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="myPageModal"
+>
+
+<div
+    class="modal-content my-page-modal"
+>
+
+<div class="modal-header">
+
+<h2>
+
+👤 我的頁面
+
+</h2>
+
+
+<button
+    class="close"
+    onclick="closeModal('myPageModal')"
+>
+
+✕
+
+</button>
+
+</div>
+
+
+<div id="myPageContent">
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+const defaultRestaurants = [
+
+{
+    id:1,
+    name:"北科牛肉麵",
+    category:"麵食",
+    price:120,
+    distance:4,
+    rating:4.8,
+    emoji:"🍜",
+    private:false,
+    recommendations:128,
+    dish:"招牌牛肉麵",
+    reason:"湯頭濃郁，份量很足，學生族群很喜歡。",
+    spicy:true,
+
+    comments:[
+        {
+            user:"小明",
+            text:"牛肉很多！"
+        },
+
+        {
+            user:"阿華",
+            text:"中午常常排隊。"
+        }
+    ]
+},
+
+{
+    id:2,
+    name:"學生便當",
+    category:"台式",
+    price:100,
+    distance:5,
+    rating:4.7,
+    emoji:"🍱",
+    private:false,
+    recommendations:231,
+    dish:"炸雞腿便當",
+    reason:"價格便宜，份量很多，非常適合學生。",
+    spicy:false,
+    comments:[]
+},
+
+{
+    id:3,
+    name:"巷口水餃",
+    category:"小吃",
+    price:90,
+    distance:6,
+    rating:4.6,
+    emoji:"🥟",
+    private:false,
+    recommendations:176,
+    dish:"高麗菜水餃",
+    reason:"價格實惠，水餃現點現煮。",
+    spicy:false,
+    comments:[]
+},
+
+{
+    id:4,
+    name:"北科漢堡店",
+    category:"西式",
+    price:180,
+    distance:7,
+    rating:4.5,
+    emoji:"🍔",
+    private:false,
+    recommendations:92,
+    dish:"牛肉起司堡",
+    reason:"漢堡肉排很厚，適合想吃西式料理。",
+    spicy:true,
+    comments:[]
+},
+
+{
+    id:5,
+    name:"巷弄咖哩",
+    category:"台式",
+    price:150,
+    distance:8,
+    rating:4.9,
+    emoji:"🍛",
+    private:true,
+    recommendations:37,
+    dish:"唐揚雞咖哩",
+    reason:"學生私藏店，咖哩香濃，唐揚雞很好吃。",
+    spicy:true,
+
+    comments:[
+        {
+            user:"北科小吃貨",
+            text:"這家真的很讚！"
+        }
+    ]
+},
+
+{
+    id:6,
+    name:"隱藏甜點店",
+    category:"甜點",
+    price:160,
+    distance:9,
+    rating:4.8,
+    emoji:"🍰",
+    private:true,
+    recommendations:29,
+    dish:"草莓蛋糕",
+    reason:"環境舒服，甜點精緻，適合下午休息。",
+    spicy:false,
+    comments:[]
+},
+
+{
+    id:7,
+    name:"東京丼飯",
+    category:"日式",
+    price:180,
+    distance:6,
+    rating:4.6,
+    emoji:"🍣",
+    private:false,
+    recommendations:88,
+    dish:"炸豬排丼",
+    reason:"份量足，適合想吃日式料理。",
+    spicy:true,
+    comments:[]
+},
+
+{
+    id:8,
+    name:"北科咖啡屋",
+    category:"咖啡",
+    price:130,
+    distance:5,
+    rating:4.4,
+    emoji:"☕",
+    private:true,
+    recommendations:24,
+    dish:"拿鐵",
+    reason:"適合讀書和做報告，可以坐比較久。",
+    spicy:false,
+    comments:[]
+}
+
+];
+
+
+/* =========================================================
+   USER DATA
+========================================================= */
+
+function loadJSON(key, fallback){
+
+    try{
+
+        const value =
+            localStorage.getItem(key);
+
+        if(!value){
+            return fallback;
+        }
+
+        const parsed =
+            JSON.parse(value);
+
+        return parsed ?? fallback;
+
+    }catch(error){
+
+        console.warn(
+            "讀取 " + key + " 失敗，使用預設資料。",
+            error
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+let restaurants =
+    loadJSON(
+        "ntutRestaurants",
+        defaultRestaurants
+    );
+
+if(!Array.isArray(restaurants)){
+    restaurants = defaultRestaurants;
+}
+
+
+let favorites =
+    loadJSON(
+        "ntutFavorites",
+        []
+    );
+
+if(!Array.isArray(favorites)){
+    favorites = [];
+}
+
+
+let currentCategory =
+    "全部";
+
+let currentSort =
+    "recommendations";
+
+
+let currentUser =
+    loadJSON(
+        "ntutUser",
+        null
+    );
+
+if(
+    !currentUser ||
+    typeof currentUser !== "object"
+){
+
+    currentUser = {
+
+        id:
+            "user_" +
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .slice(2,8),
+
+        name:"北科吃貨",
+
+        avatar:"🐱"
+
+    };
+
+}
+
+
+if(!currentUser.id){
+
+    currentUser.id =
+        "user_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2,8);
+
+}
+
+
+if(!currentUser.name){
+
+    currentUser.name =
+        "北科吃貨";
+
+}
+
+
+if(!currentUser.avatar){
+
+    currentUser.avatar =
+        "🐱";
+
+}
+
+
+let myRecommendations =
+    loadJSON(
+        "ntutMyRecommendations",
+        []
+    );
+
+if(!Array.isArray(myRecommendations)){
+    myRecommendations = [];
+}
+
+
+/* =========================================================
+   SAVE USER DATA
+========================================================= */
+
+function saveUserData(){
+
+    localStorage.setItem(
+        "ntutUser",
+        JSON.stringify(
+            currentUser
+        )
+    );
+
+    localStorage.setItem(
+        "ntutMyRecommendations",
+        JSON.stringify(
+            myRecommendations
+        )
+    );
+
+}
+
+
+/* =========================================================
+   SAVE DATA
+========================================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        "ntutRestaurants",
+        JSON.stringify(
+            restaurants
+        )
+    );
+
+    localStorage.setItem(
+        "ntutFavorites",
+        JSON.stringify(
+            favorites
+        )
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+
+        renderRestaurants();
+
+        updateStats();
+
+        const headerUser =
+            document.getElementById(
+                "headerUser"
+            );
+
+        if(headerUser){
+
+            headerUser.textContent =
+                "👋 " +
+                currentUser.name;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AI
+========================================================= */
+
+function sendAIMessage(){
+
+    const input =
+        document.getElementById(
+            "aiInput"
+        );
+
+    const text =
+        input.value.trim();
+
+    if(!text) return;
+
+
+    addMessage(
+        "user",
+        escapeHTML(text)
+    );
+
+
+    input.value="";
+
+
+    setTimeout(()=>{
+
+        const parsed =
+            parseUserRequest(
+                text
+            );
+
+
+        showUnderstanding(
+            parsed
+        );
+
+
+        const response =
+            generateAIResponse(
+                parsed
+            );
+
+
+        addMessage(
+            "ai",
+            response
+        );
+
+
+        showAIResults(
+            parsed
+        );
+
+    },400);
+
+}
+
+
+/* =========================================================
+   QUICK PROMPT
+========================================================= */
+
+function setPrompt(text){
+
+    document
+        .getElementById(
+            "aiInput"
+        )
+        .value=text;
+
+    sendAIMessage();
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    type,
+    text
+){
+
+    const box =
+        document.getElementById(
+            "chatBox"
+        );
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "message " +
+        type;
+
+
+    div.innerHTML = `
+
+        <div class="message-bubble">
+
+            ${text}
+
+        </div>
+
+    `;
+
+
+    box.appendChild(
+        div
+    );
+
+
+    box.scrollTop =
+        box.scrollHeight;
+
+}
+
+
+/* =========================================================
+   AI PARSING
+========================================================= */
+
+function parseUserRequest(
+    text
+){
+
+    const request={
+
+        budget:null,
+
+        distance:null,
+
+        category:null,
+
+        spicy:false,
+
+        cheap:false,
+
+        good:false,
+
+        quick:false,
+
+        mood:null
+
+    };
+
+
+    const budgetMatch =
+        text.match(
+            /(\d+)\s*(元|塊|塊錢)/
+        );
+
+
+    if(budgetMatch){
+
+        request.budget =
+            Number(
+                budgetMatch[1]
+            );
+
+    }
+
+
+    if(
+        text.includes("沒錢") ||
+        text.includes("月底") ||
+        text.includes("便宜")
+    ){
+
+        request.budget =
+            request.budget ||
+            100;
+
+        request.cheap=true;
+
+    }
+
+
+    const distanceMatch =
+        text.match(
+            /(\d+)\s*(分鐘|分|分鐘內)/
+        );
+
+
+    if(distanceMatch){
+
+        request.distance =
+            Number(
+                distanceMatch[1]
+            );
+
+    }
+
+
+    if(
+        text.includes("不想走") ||
+        text.includes("附近")
+    ){
+
+        request.distance =
+            request.distance ||
+            5;
+
+    }
+
+
+    if(
+        text.includes("麵")
+    ){
+
+        request.category="麵食";
+
+    }
+
+    else if(
+        text.includes("飯") ||
+        text.includes("便當")
+    ){
+
+        request.category="台式";
+
+    }
+
+    else if(
+        text.includes("漢堡")
+    ){
+
+        request.category="西式";
+
+    }
+
+    else if(
+        text.includes("日式") ||
+        text.includes("壽司") ||
+        text.includes("丼")
+    ){
+
+        request.category="日式";
+
+    }
+
+    else if(
+        text.includes("水餃") ||
+        text.includes("小吃")
+    ){
+
+        request.category="小吃";
+
+    }
+
+    else if(
+        text.includes("甜") ||
+        text.includes("蛋糕")
+    ){
+
+        request.category="甜點";
+
+    }
+
+    else if(
+        text.includes("咖啡")
+    ){
+
+        request.category="咖啡";
+
+    }
+
+
+    if(
+        text.includes("辣")
+    ){
+
+        request.spicy=true;
+
+    }
+
+
+    if(
+        text.includes("累") ||
+        text.includes("疲")
+    ){
+
+        request.mood="累";
+
+    }
+
+
+    if(
+        text.includes("趕") ||
+        text.includes("時間")
+    ){
+
+        request.quick=true;
+
+    }
+
+
+    if(
+        text.includes("好一點") ||
+        text.includes("犒賞")
+    ){
+
+        request.good=true;
+
+    }
+
+
+    return request;
+
+}
+
+
+/* =========================================================
+   AI RESPONSE
+========================================================= */
+
+function generateAIResponse(
+    r
+){
+
+    let parts=[];
+
+
+    if(r.budget){
+
+        parts.push(
+            `預算抓在 $${r.budget} 以下`
+        );
+
+    }
+
+
+    if(r.distance){
+
+        parts.push(
+            `距離控制在 ${r.distance} 分鐘內`
+        );
+
+    }
+
+
+    if(r.category){
+
+        parts.push(
+            `想吃 ${r.category}`
+        );
+
+    }
+
+
+    if(r.spicy){
+
+        parts.push(
+            "想吃辣"
+        );
+
+    }
+
+
+    if(parts.length===0){
+
+        return `
+
+            🐱 收到！<br><br>
+
+            我會綜合價格、距離、
+            評分和學生推薦度幫你挑選。<br><br>
+
+            看看下面這幾間 👇
+
+        `;
+
+    }
+
+
+    return `
+
+        🐱 收到！<br><br>
+
+        我理解你的需求是：<br><br>
+
+        <strong>
+            ${parts.join("、")}
+        </strong>
+
+        <br><br>
+
+        我會綜合價格、距離、
+        評價和學生推薦度幫你選。<br><br>
+
+        看看下面這幾間 👇
+
+    `;
+
+}
+
+
+/* =========================================================
+   AI UNDERSTANDING
+========================================================= */
+
+function showUnderstanding(
+    r
+){
+
+    const box =
+        document.getElementById(
+            "aiUnderstanding"
+        );
+
+
+    const tags =
+        document.getElementById(
+            "understandingTags"
+        );
+
+
+    let html="";
+
+
+    if(r.budget){
+
+        html += `
+
+            <span class="tag">
+
+                💰 $${r.budget} 以下
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(r.distance){
+
+        html += `
+
+            <span class="tag">
+
+                🚶 ${r.distance} 分鐘內
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(r.category){
+
+        html += `
+
+            <span class="tag">
+
+                🍴 ${r.category}
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(r.spicy){
+
+        html += `
+
+            <span class="tag">
+
+                🌶️ 辣
+
+            </span>
+
+        `;
+
+    }
+
+
+    if(!html){
+
+        html=`
+
+            <span class="tag">
+
+                🤖 綜合推薦
+
+            </span>
+
+        `;
+
+    }
+
+
+    tags.innerHTML=html;
+
+    box.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   AI RESULTS
+========================================================= */
+
+function showAIResults(
+    request
+){
+
+    let candidates =
+        restaurants.filter(
+            r=>{
+
+                if(
+                    request.budget &&
+                    r.price >
+                    request.budget
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    request.distance &&
+                    r.distance >
+                    request.distance
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    request.category &&
+                    r.category !==
+                    request.category
+                ){
+
+                    return false;
+
+                }
+
+
+                if(
+                    request.spicy &&
+                    !r.spicy
+                ){
+
+                    return false;
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    if(
+        candidates.length===0
+    ){
+
+        candidates =
+            restaurants.filter(
+                r=>{
+
+                    if(
+                        request.budget &&
+                        r.price >
+                        request.budget+50
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    if(
+                        request.distance &&
+                        r.distance >
+                        request.distance+5
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    return true;
+
+                }
+            );
+
+    }
+
+
+    candidates =
+        candidates.map(
+            r=>{
+
+                let score=0;
+
+
+                score +=
+                    r.rating*20;
+
+
+                score +=
+                    Math.min(
+                        r.recommendations/5,
+                        20
+                    );
+
+
+                score +=
+                    Math.max(
+                        15-r.distance,
+                        0
+                    );
+
+
+                if(r.private){
+
+                    score+=10;
+
+                }
+
+
+                if(
+                    request.spicy &&
+                    r.spicy
+                ){
+
+                    score+=15;
+
+                }
+
+
+                if(
+                    request.cheap &&
+                    r.price<=100
+                ){
+
+                    score+=15;
+
+                }
+
+
+                return{
+
+                    ...r,
+
+                    aiScore:score
+
+                };
+
+            }
+        );
+
+
+    candidates.sort(
+        (a,b)=>
+            b.aiScore -
+            a.aiScore
+    );
+
+
+    const top3 =
+        candidates.slice(
+            0,
+            3
+        );
+
+
+    const grid =
+        document.getElementById(
+            "aiResultGrid"
+        );
+
+
+    grid.innerHTML =
+        top3
+            .map(
+                (r,index)=>
+                    createAIResultCard(
+                        r,
+                        index,
+                        request
+                    )
+            )
+            .join("");
+
+
+    document
+        .getElementById(
+            "aiResults"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   AI RESULT CARD
+========================================================= */
+
+function createAIResultCard(
+    r,
+    index,
+    request
+){
+
+    let reason=[];
+
+
+    if(
+        request.budget &&
+        r.price<=request.budget
+    ){
+
+        reason.push(
+            "符合你的預算"
+        );
+
+    }
+
+
+    if(
+        request.distance &&
+        r.distance<=request.distance
+    ){
+
+        reason.push(
+            "距離很近"
+        );
+
+    }
+
+
+    if(r.rating>=4.7){
+
+        reason.push(
+            "學生評價很高"
+        );
+
+    }
+
+
+    if(r.private){
+
+        reason.push(
+            "北科學生私藏"
+        );
+
+    }
+
+
+    if(
+        request.spicy &&
+        r.spicy
+    ){
+
+        reason.push(
+            "符合你想吃辣的需求"
+        );
+
+    }
+
+
+    if(reason.length===0){
+
+        reason.push(
+            "整體 CP 值不錯"
+        );
+
+    }
+
+
+    const favorite =
+        favorites.includes(
+            r.id
+        );
+
+
+    return `
+
+        <div class="result-card">
+
+            <div class="result-image">
+
+                ${r.emoji}
+
+            </div>
+
+
+            <div class="result-body">
+
+                <div class="result-rank">
+
+                    ${
+                        index===0
+                        ? "🥇 最推薦"
+                        : index===1
+                        ? "🥈 第二推薦"
+                        : "🥉 第三推薦"
+                    }
+
+                </div>
+
+
+                <h3>
+
+                    ${escapeHTML(r.name)}
+
+                </h3>
+
+
+                <div class="result-meta">
+
+                    ⭐ ${r.rating}<br>
+
+                    💰 $${r.price}
+                    ｜ 🚶 ${r.distance}分鐘
+
+                </div>
+
+
+                <div class="ai-reason">
+
+                    🤖
+                    ${reason.join("、")}。
+
+                </div>
+
+
+                <div class="result-actions">
+
+                    <button
+                        class="secondary-btn"
+                        onclick="
+                            toggleFavorite(${r.id})
+                        "
+                    >
+
+                        ${
+                            favorite
+                            ? "❤️ 已收藏"
+                            : "♡ 收藏"
+                        }
+
+                    </button>
+
+
+                    <button
+                        class="primary-btn"
+                        onclick="
+                            openDetail(${r.id})
+                        "
+                    >
+
+                        查看
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderRestaurants(){
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const keyword =
+        searchInput
+        .value
+        .toLowerCase();
+
+
+    let filtered =
+        restaurants.filter(
+            r=>{
+
+                if(
+                    currentCategory !==
+                    "全部" &&
+                    r.category !==
+                    currentCategory
+                ){
+
+                    return false;
+
+                }
+
+
+                if(keyword){
+
+                    const text=`
+
+                        ${r.name}
+                        ${r.category}
+                        ${r.dish}
+                        ${r.reason}
+
+                    `.toLowerCase();
+
+
+                    if(
+                        !text.includes(
+                            keyword
+                        )
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    if(currentSort === "rating"){
+
+        filtered.sort(
+            (a,b)=>{
+
+                const ratingA = Number(a.rating) || 0;
+                const ratingB = Number(b.rating) || 0;
+
+                if(ratingB !== ratingA){
+                    return ratingB - ratingA;
+                }
+
+                return (Number(b.recommendations) || 0) -
+                    (Number(a.recommendations) || 0);
+
+            }
+        );
+
+    }else{
+
+        filtered.sort(
+            (a,b)=>
+                (Number(b.recommendations) || 0) -
+                (Number(a.recommendations) || 0)
+        );
+
+    }
+
+
+    document
+        .getElementById(
+            "restaurantGrid"
+        )
+        .innerHTML =
+        filtered
+            .map(
+                createRestaurantCard
+            )
+            .join("");
+
+
+    document
+        .getElementById(
+            "privateGrid"
+        )
+        .innerHTML =
+        restaurants
+            .filter(
+                r=>r.private
+            )
+            .slice(0,4)
+            .map(
+                createRestaurantCard
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   RESTAURANT CARD
+========================================================= */
+
+function createRestaurantCard(
+    r
+){
+
+    const favorite =
+        favorites.includes(
+            r.id
+        );
+
+
+    return `
+
+        <div class="restaurant-card">
+
+
+            <div
+                class="food-image"
+                onclick="
+                    openDetail(${r.id})
+                "
+            >
+
+                ${
+                    r.private
+                    ?
+                    `
+                    <span class="private-tag">
+
+                        🤫 學生私藏
+
+                    </span>
+                    `
+                    :
+                    ""
+                }
+
+
+                <button
+                    class="
+                        favorite
+                        ${favorite?"active":""}
+                    "
+                    onclick="
+                        event.stopPropagation();
+                        toggleFavorite(${r.id});
+                    "
+                >
+
+                    ${
+                        favorite
+                        ? "❤️"
+                        : "♡"
+                    }
+
+                </button>
+
+
+                ${r.emoji}
+
+            </div>
+
+
+            <div class="card-body">
+
+                <h3>
+
+                    ${escapeHTML(r.name)}
+
+                </h3>
+
+
+                <div class="card-meta">
+
+                    ${r.category}
+                    ｜ 💰 $${r.price}
+                    ｜ 🚶 ${r.distance}分
+
+                </div>
+
+
+                <div class="rating">
+
+                    ⭐ ${r.rating}
+
+                </div>
+
+
+                <div class="card-bottom">
+
+                    <span
+                        style="
+                            font-size:12px;
+                            color:#777;
+                        "
+                    >
+
+                        ${escapeHTML(r.dish)}
+
+                    </span>
+
+
+                    <button
+                        class="detail-btn"
+                        onclick="
+                            openDetail(${r.id})
+                        "
+                    >
+
+                        查看
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filterCategory(
+    category,
+    button
+){
+
+    currentCategory =
+        category;
+
+
+    document
+        .querySelectorAll(
+            ".filter-btn"
+        )
+        .forEach(
+            b=>
+                b.classList.remove(
+                    "active"
+                )
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    renderRestaurants();
+
+}
+
+
+/* =========================================================
+   FAVORITE
+========================================================= */
+
+function toggleFavorite(
+    id
+){
+
+    if(
+        favorites.includes(id)
+    ){
+
+        favorites =
+            favorites.filter(
+                x=>x!==id
+            );
+
+
+        showToast(
+            "已取消收藏 ❤️"
+        );
+
+    }
+
+    else{
+
+        favorites.push(id);
+
+
+        showToast(
+            "已加入收藏 ❤️"
+        );
+
+    }
+
+
+    saveData();
+
+    renderRestaurants();
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   FAVORITE MODAL
+========================================================= */
+
+function showFavorites(){
+
+    renderFavoriteModal();
+
+
+    document
+        .getElementById(
+            "favoriteModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+function renderFavoriteModal(){
+
+    const container =
+        document.getElementById(
+            "favoriteContent"
+        );
+
+
+    const list =
+        favorites
+            .map(
+                id=>
+                    restaurants.find(
+                        r=>r.id===id
+                    )
+            )
+            .filter(Boolean);
+
+
+    if(list.length===0){
+
+        container.innerHTML=`
+
+            <div class="favorite-empty">
+
+                <div
+                    style="
+                        font-size:55px
+                    "
+                >
+
+                    💔
+
+                </div>
+
+
+                <h3
+                    style="
+                        margin:12px 0 6px
+                    "
+                >
+
+                    還沒有收藏餐廳
+
+                </h3>
+
+
+                <p>
+
+                    看到喜歡的餐廳，
+                    點一下 ❤️ 就可以收藏！
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        list
+            .map(
+                r=>`
+
+                    <div class="favorite-item">
+
+                        <div class="favorite-icon">
+
+                            ${r.emoji}
+
+                        </div>
+
+
+                        <div class="favorite-info">
+
+                            <h3>
+
+                                ${escapeHTML(
+                                    r.name
+                                )}
+
+                            </h3>
+
+
+                            <p>
+
+                                ⭐ ${r.rating}
+                                ｜ 💰 $${r.price}
+                                ｜ 🚶 ${r.distance}分鐘
+
+                                <br>
+
+                                🍽
+                                ${escapeHTML(
+                                    r.dish
+                                )}
+
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            class="favorite-open"
+                            onclick="
+                                openDetail(${r.id})
+                            "
+                        >
+
+                            查看
+
+                        </button>
+
+
+                        <button
+                            class="favorite-remove"
+                            onclick="
+                                toggleFavoriteFromPopup(
+                                    ${r.id}
+                                )
+                            "
+                        >
+
+                            ❤️
+
+                        </button>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+}
+
+
+function toggleFavoriteFromPopup(
+    id
+){
+
+    toggleFavorite(id);
+
+    renderFavoriteModal();
+
+}
+
+
+/* =========================================================
+   DETAIL
+========================================================= */
+
+function openDetail(
+    id
+){
+
+    const r =
+        restaurants.find(
+            x=>x.id===id
+        );
+
+
+    if(!r) return;
+
+
+    const comments =
+        (r.comments||[])
+            .map(
+                c=>`
+
+                    <div class="comment">
+
+                        <div class="comment-user">
+
+                            👤
+                            ${escapeHTML(
+                                c.user
+                            )}
+
+                        </div>
+
+
+                        <div class="comment-text">
+
+                            ${escapeHTML(
+                                c.text
+                            )}
+
+                        </div>
+
+                    </div>
+
+                `
+            )
+            .join("");
+
+
+    const favorite =
+        favorites.includes(
+            r.id
+        );
+
+
+    document
+        .getElementById(
+            "detailContent"
+        )
+        .innerHTML = `
+
+            <div class="detail-hero">
+
+                ${r.emoji}
+
+            </div>
+
+
+            <div class="detail-title">
+
+                <h2>
+
+                    ${escapeHTML(
+                        r.name
+                    )}
+
+                </h2>
+
+
+                <button
+                    class="detail-favorite"
+                    onclick="
+                        toggleFavorite(${r.id});
+                        openDetail(${r.id});
+                    "
+                >
+
+                    ${
+                        favorite
+                        ? "❤️"
+                        : "♡"
+                    }
+
+                </button>
+
+            </div>
+
+
+            <div class="detail-info">
+
+                ⭐ ${r.rating}
+
+                ｜ ${r.category}
+
+                ｜ 💰 $${r.price}
+
+                ｜ 🚶 ${r.distance}分鐘
+
+            </div>
+
+
+            ${
+                r.private
+                ?
+                `
+                <div
+                    style="
+                        display:inline-block;
+                        background:#292929;
+                        color:white;
+                        padding:6px 10px;
+                        border-radius:10px;
+                        font-size:12px;
+                        margin-bottom:12px;
+                    "
+                >
+
+                    🤫 北科學生私藏
+
+                </div>
+                `
+                :
+                ""
+            }
+
+
+            <div class="detail-box">
+
+                <strong>
+
+                    🍽 推薦餐點
+
+                </strong>
+
+                <br>
+
+                ${escapeHTML(
+                    r.dish
+                )}
+
+            </div>
+
+
+            <div class="detail-box">
+
+                <strong>
+
+                    💬 學生推薦理由
+
+                </strong>
+
+                <br>
+
+                ${escapeHTML(
+                    r.reason
+                )}
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:22px
+                "
+            >
+
+                <h3>
+
+                    💬 學生評論
+
+                </h3>
+
+
+                <div
+                    style="
+                        margin-top:10px
+                    "
+                >
+
+                    ${
+                        comments ||
+                        `
+                        <p
+                            style="
+                                color:#999;
+                                padding:12px 0;
+                            "
+                        >
+
+                            目前還沒有評論。
+
+                        </p>
+                        `
+                    }
+
+                </div>
+
+
+                <div
+                    class="comment-input"
+                    style="
+                        display:flex;
+                        gap:8px;
+                        margin-top:15px;
+                    "
+                >
+
+                    <input
+                        id="commentInput"
+                        placeholder="
+                            分享你對這家餐廳的想法...
+                        "
+                        style="
+                            flex:1;
+                            border:1px solid #e8e8e8;
+                            border-radius:10px;
+                            padding:10px;
+                        "
+                    >
+
+
+                    <button
+                        class="primary-btn"
+                        onclick="
+                            addComment(${r.id})
+                        "
+                    >
+
+                        留言
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+    document
+        .getElementById(
+            "detailModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   COMMENT
+========================================================= */
+
+function addComment(
+    id
+){
+
+    const input =
+        document.getElementById(
+            "commentInput"
+        );
+
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        showToast(
+            "請先輸入評論"
+        );
+
+        return;
+
+    }
+
+
+    const r =
+        restaurants.find(
+            x=>x.id===id
+        );
+
+
+    if(!r) return;
+
+
+    if(!r.comments){
+
+        r.comments=[];
+
+    }
+
+
+    r.comments.push({
+
+        userId:
+            currentUser.id,
+
+        user:
+            currentUser.name,
+
+        text:text,
+
+        createdAt:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    r.recommendations++;
+
+
+    saveData();
+
+    renderRestaurants();
+
+    updateStats();
+
+    openDetail(id);
+
+
+    showToast(
+        "評論已發布 💬"
+    );
+
+}
+
+
+/* =========================================================
+   RECOMMEND RESTAURANT
+========================================================= */
+
+function openRecommendModal(){
+
+    document
+        .getElementById(
+            "recommendModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+function submitRecommendation(
+    event
+){
+
+    event.preventDefault();
+
+
+    const category =
+        document
+            .getElementById(
+                "newCategory"
+            )
+            .value;
+
+
+    const restaurant={
+
+        id:
+            Date.now(),
+
+        name:
+            document
+                .getElementById(
+                    "newName"
+                )
+                .value
+                .trim(),
+
+        category:
+
+            category,
+
+        price:
+
+            Number(
+                document
+                    .getElementById(
+                        "newPrice"
+                    )
+                    .value
+            ) || 120,
+
+        distance:
+
+            Number(
+                document
+                    .getElementById(
+                        "newDistance"
+                    )
+                    .value
+            ) || 5,
+
+        rating:
+
+            Number(
+                document
+                    .getElementById(
+                        "newRating"
+                    )
+                    .value
+            ),
+
+        emoji:
+
+            getEmoji(
+                category
+            ),
+
+        private:
+
+            document
+                .getElementById(
+                    "newPrivate"
+                )
+                .value ===
+                "yes",
+
+        recommendations:1,
+
+        dish:
+
+            document
+                .getElementById(
+                    "newDish"
+                )
+                .value
+            ||
+            "招牌餐點",
+
+        reason:
+
+            document
+                .getElementById(
+                    "newReason"
+                )
+                .value,
+
+        spicy:
+
+            document
+                .getElementById(
+                    "newReason"
+                )
+                .value
+                .includes("辣"),
+
+        comments:[]
+
+    };
+
+
+    restaurants.unshift(
+        restaurant
+    );
+
+
+    /* 建立自己的推薦紀錄 */
+
+    myRecommendations.unshift({
+
+        restaurantId:
+            restaurant.id,
+
+        name:
+            restaurant.name,
+
+        category:
+            restaurant.category,
+
+        price:
+            restaurant.price,
+
+        rating:
+            restaurant.rating,
+
+        emoji:
+            restaurant.emoji,
+
+        dish:
+            restaurant.dish,
+
+        reason:
+            restaurant.reason,
+
+        createdAt:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    saveUserData();
+
+    saveData();
+
+
+    renderRestaurants();
+
+    updateStats();
+
+
+    closeModal(
+        "recommendModal"
+    );
+
+
+    event.target.reset();
+
+
+    showToast(
+        "🎉 餐廳推薦成功！"
+    );
+
+}
+
+
+/* =========================================================
+   EMOJI
+========================================================= */
+
+function getEmoji(
+    category
+){
+
+    const map={
+
+        "台式":"🍱",
+
+        "麵食":"🍜",
+
+        "日式":"🍣",
+
+        "西式":"🍔",
+
+        "小吃":"🥟",
+
+        "甜點":"🍰",
+
+        "咖啡":"☕"
+
+    };
+
+
+    return (
+        map[category] ||
+        "🍴"
+    );
+
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats(){
+
+    document
+        .getElementById(
+            "restaurantCount"
+        )
+        .textContent =
+        restaurants.length;
+
+
+    document
+        .getElementById(
+            "recommendCount"
+        )
+        .textContent =
+        restaurants.reduce(
+            (sum,r)=>
+                sum+r.recommendations,
+            0
+        );
+
+
+    document
+        .getElementById(
+            "favoriteCount"
+        )
+        .textContent =
+        favorites.length;
+
+
+    document
+        .getElementById(
+            "privateCount"
+        )
+        .textContent =
+        restaurants.filter(
+            r=>r.private
+        ).length;
+
+}
+
+
+/* =========================================================
+   MY PAGE
+========================================================= */
+
+function showMyPage(){
+
+    renderMyPage();
+
+
+    document
+        .getElementById(
+            "myPageModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+function renderMyPage(){
+
+    const content =
+        document.getElementById(
+            "myPageContent"
+        );
+
+
+    const myComments=[];
+
+
+    restaurants.forEach(
+        r=>{
+
+            (r.comments||[])
+                .forEach(
+                    c=>{
+
+                        if(
+                            (
+                                c.userId &&
+                                c.userId ===
+                                currentUser.id
+                            ) ||
+                            (
+                                !c.userId &&
+                                c.user ===
+                                currentUser.name
+                            )
+                        ){
+
+                            myComments.push({
+
+                                ...c,
+
+                                restaurantId:
+                                    r.id,
+
+                                restaurantName:
+                                    r.name,
+
+                                emoji:
+                                    r.emoji
+
+                            });
+
+                        }
+
+                    }
+                );
+
+        }
+    );
+
+
+    myComments.sort(
+        (a,b)=>
+            new Date(
+                b.createdAt || 0
+            ) -
+            new Date(
+                a.createdAt || 0
+            )
+    );
+
+
+    const recs =
+        [
+            ...myRecommendations
+        ].sort(
+            (a,b)=>
+                new Date(
+                    b.createdAt
+                ) -
+                new Date(
+                    a.createdAt
+                )
+        );
+
+
+    content.innerHTML=`
+
+        <div class="profile-card">
+
+            <div class="profile-avatar">
+
+                ${currentUser.avatar}
+
+            </div>
+
+
+            <div class="profile-info">
+
+                <h2>
+
+                    ${escapeHTML(
+                        currentUser.name
+                    )}
+
+                </h2>
+
+
+                <p>
+
+                    北科 Food 社群成員
+
+                </p>
+
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-stats">
+
+            <div>
+
+                <strong>
+
+                    ${favorites.length}
+
+                </strong>
+
+                <span>
+
+                    ❤️ 收藏
+
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+
+                    ${recs.length}
+
+                </strong>
+
+                <span>
+
+                    🍜 推薦
+
+                </span>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+
+                    ${myComments.length}
+
+                </strong>
+
+                <span>
+
+                    💬 評論
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- 推薦紀錄 -->
+
+        <div class="my-section">
+
+            <div class="my-section-title">
+
+                <h3>
+
+                    📋 我的推薦紀錄
+
+                </h3>
+
+
+                <span>
+
+                    ${recs.length} 筆
+
+                </span>
+
+            </div>
+
+
+            ${
+                recs.length
+
+                ?
+
+                recs
+                    .map(
+                        rec=>`
+
+                            <div
+                                class="history-item"
+                            >
+
+                                <div
+                                    class="history-icon"
+                                >
+
+                                    ${
+                                        rec.emoji ||
+                                        "🍽️"
+                                    }
+
+                                </div>
+
+
+                                <div
+                                    class="history-main"
+                                >
+
+                                    <h4>
+
+                                        ${escapeHTML(
+                                            rec.name
+                                        )}
+
+                                    </h4>
+
+
+                                    <p>
+
+                                        ${escapeHTML(
+                                            rec.category
+                                        )}
+
+                                        ·
+
+                                        $${rec.price}
+
+                                        ·
+
+                                        ⭐ ${rec.rating}
+
+                                    </p>
+
+
+                                    <small>
+
+                                        推薦餐點：
+
+                                        ${escapeHTML(
+                                            rec.dish ||
+                                            "未填寫"
+                                        )}
+
+                                        ·
+
+                                        ${formatDate(
+                                            rec.createdAt
+                                        )}
+
+                                    </small>
+
+                                </div>
+
+
+                                <button
+                                    class="detail-btn"
+                                    onclick="
+                                        openDetail(
+                                            ${rec.restaurantId}
+                                        );
+                                        closeModal(
+                                            'myPageModal'
+                                        );
+                                    "
+                                >
+
+                                    查看
+
+                                </button>
+
+                            </div>
+
+                        `
+                    )
+                    .join("")
+
+                :
+
+                `
+
+                <div class="empty-history">
+
+                    🍜
+
+                    <br>
+
+                    <strong>
+
+                        還沒有推薦紀錄
+
+                    </strong>
+
+                    <br>
+
+                    <span>
+
+                        發現好吃的店，
+                        就推薦給北科同學吧！
+
+                    </span>
+
+                </div>
+
+                `
+            }
+
+        </div>
+
+
+        <!-- 評論 -->
+
+        <div class="my-section">
+
+            <div class="my-section-title">
+
+                <h3>
+
+                    💬 我的評論
+
+                </h3>
+
+
+                <span>
+
+                    ${myComments.length} 則
+
+                </span>
+
+            </div>
+
+
+            ${
+                myComments.length
+
+                ?
+
+                myComments
+                    .map(
+                        c=>`
+
+                            <div
+                                class="history-item"
+                            >
+
+                                <div
+                                    class="history-icon"
+                                >
+
+                                    ${
+                                        c.emoji ||
+                                        "🍽️"
+                                    }
+
+                                </div>
+
+
+                                <div
+                                    class="history-main"
+                                >
+
+                                    <h4>
+
+                                        ${escapeHTML(
+                                            c.restaurantName
+                                        )}
+
+                                    </h4>
+
+
+                                    <p>
+
+                                        「
+                                        ${escapeHTML(
+                                            c.text
+                                        )}
+                                        」
+
+                                    </p>
+
+
+                                    <small>
+
+                                        ${formatDate(
+                                            c.createdAt
+                                        )}
+
+                                    </small>
+
+                                </div>
+
+
+                                <button
+                                    class="detail-btn"
+                                    onclick="
+                                        openDetail(
+                                            ${c.restaurantId}
+                                        );
+                                        closeModal(
+                                            'myPageModal'
+                                        );
+                                    "
+                                >
+
+                                    查看
+
+                                </button>
+
+                            </div>
+
+                        `
+                    )
+                    .join("")
+
+                :
+
+                `
+
+                <div class="empty-history">
+
+                    💬
+
+                    <br>
+
+                    <strong>
+
+                        還沒有評論
+
+                    </strong>
+
+                    <br>
+
+                    <span>
+
+                        吃完之後記得留下你的心得！
+
+                    </span>
+
+                </div>
+
+                `
+            }
+
+        </div>
+
+
+        <!-- 收藏 -->
+
+        <div class="my-section">
+
+            <div class="my-section-title">
+
+                <h3>
+
+                    ❤️ 我的收藏
+
+                </h3>
+
+
+                <span>
+
+                    ${favorites.length} 家
+
+                </span>
+
+            </div>
+
+
+            ${
+                favorites.length
+
+                ?
+
+                favorites
+                    .map(
+                        id=>
+                            restaurants.find(
+                                r=>r.id===id
+                            )
+                    )
+                    .filter(Boolean)
+                    .slice(0,5)
+                    .map(
+                        r=>`
+
+                            <div
+                                class="history-item"
+                            >
+
+                                <div
+                                    class="history-icon"
+                                >
+
+                                    ${r.emoji}
+
+                                </div>
+
+
+                                <div
+                                    class="history-main"
+                                >
+
+                                    <h4>
+
+                                        ${escapeHTML(
+                                            r.name
+                                        )}
+
+                                    </h4>
+
+
+                                    <p>
+
+                                        ${r.category}
+
+                                        ·
+
+                                        $${r.price}
+
+                                        ·
+
+                                        🚶
+                                        ${r.distance}
+                                        分鐘
+
+                                    </p>
+
+                                </div>
+
+
+                                <button
+                                    class="detail-btn"
+                                    onclick="
+                                        openDetail(
+                                            ${r.id}
+                                        );
+                                        closeModal(
+                                            'myPageModal'
+                                        );
+                                    "
+                                >
+
+                                    查看
+
+                                </button>
+
+                            </div>
+
+                        `
+                    )
+                    .join("")
+
+                :
+
+                `
+
+                <div class="empty-history">
+
+                    ❤️
+
+                    <br>
+
+                    <strong>
+
+                        還沒有收藏
+
+                    </strong>
+
+                    <br>
+
+                    <span>
+
+                        看到喜歡的餐廳
+                        就按下愛心吧！
+
+                    </span>
+
+                </div>
+
+                `
+            }
+
+        </div>
+
+
+        <div class="account-actions">
+
+            <button
+                class="secondary-btn
+                        edit-btn
+                "
+                onclick="
+                    editUserName()
+                "
+            >
+
+                修改帳號名稱
+
+            </button>
+
+
+            <button
+                class="secondary-btn
+                        check-btn
+                "
+                onclick="
+                    confirmUserData()
+                "
+            >
+
+                確認資料
+
+            </button>
+
+
+            <button
+                class="
+                    secondary-btn
+                    danger-btn
+                "
+                onclick="
+                    resetUserData()
+                "
+            >
+
+                清除個人資料
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   EDIT USER NAME
+========================================================= */
+
+function editUserName(){
+
+    const name =
+        prompt(
+            "請輸入新的帳號名稱：",
+            currentUser.name
+        );
+
+
+    if(name===null) return;
+
+
+    const trimmed =
+        name.trim();
+
+
+    if(!trimmed){
+
+        showToast(
+            "名稱不能是空白"
+        );
+
+        return;
+
+    }
+
+
+    currentUser.name =
+        trimmed.slice(
+            0,
+            20
+        );
+
+
+    saveUserData();
+
+
+    const headerUser =
+        document.getElementById(
+            "headerUser"
+        );
+
+
+    if(headerUser){
+
+        headerUser.textContent =
+            "👋 " +
+            currentUser.name;
+
+    }
+
+
+    renderMyPage();
+
+
+    showToast(
+        "帳號名稱已更新！"
+    );
+
+}
+
+
+/* =========================================================
+   RESET USER
+========================================================= */
+
+function confirmUserData(){
+
+    saveUserData();
+
+    showToast(
+        "個人資料已確認 ✓"
+    );
+
+}
+
+
+function resetUserData(){
+
+    const confirmed =
+        confirm(
+            "確定要清除所有個人資料嗎？\\n\\n" +
+            "將會清除：\\n" +
+            "• 帳號名稱\\n" +
+            "• 我的推薦紀錄\\n" +
+            "• 我的收藏\\n" +
+            "• 我發布的評論\\n\\n" +
+            "餐廳公共資料不會被刪除。"
+        );
+
+
+    if(!confirmed) return;
+
+
+    const oldUserId =
+        currentUser.id;
+
+    const oldUserName =
+        currentUser.name;
+
+
+    restaurants.forEach(
+        r=>{
+
+            if(
+                !Array.isArray(
+                    r.comments
+                )
+            ){
+
+                return;
+
+            }
+
+
+            r.comments =
+                r.comments.filter(
+                    comment=>{
+
+                        if(
+                            comment &&
+                            comment.userId
+                        ){
+
+                            return (
+                                comment.userId !==
+                                oldUserId
+                            );
+
+                        }
+
+
+                        return !(
+                            comment &&
+                            comment.user ===
+                            oldUserName
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+
+    currentUser = {
+
+        id:
+            "user_" +
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .slice(2,8),
+
+        name:"北科吃貨",
+
+        avatar:"🐱"
+
+    };
+
+
+    myRecommendations = [];
+
+    favorites = [];
+
+
+    saveUserData();
+
+    saveData();
+
+
+    const headerUser =
+        document.getElementById(
+            "headerUser"
+        );
+
+
+    if(headerUser){
+
+        headerUser.textContent =
+            "👋 北科吃貨";
+
+    }
+
+
+    renderRestaurants();
+
+    updateStats();
+
+    renderMyPage();
+
+
+    showToast(
+        "個人資料與評論已全部清除"
+    );
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(
+    date
+){
+
+    if(!date){
+
+        return "日期未記錄";
+
+    }
+
+
+    const d =
+        new Date(date);
+
+
+    if(
+        Number.isNaN(
+            d.getTime()
+        )
+    ){
+
+        return "日期未記錄";
+
+    }
+
+
+    return d.toLocaleDateString(
+        "zh-TW",
+        {
+            year:"numeric",
+            month:"2-digit",
+            day:"2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+function sortByRating(){
+
+    currentSort =
+        "rating";
+
+    renderRestaurants();
+
+
+    showToast(
+        "已依照評分排序 ⭐"
+    );
+
+}
+
+
+/* =========================================================
+   NAV
+========================================================= */
+
+function focusAI(){
+
+    document
+        .getElementById(
+            "aiSection"
+        )
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+
+    setTimeout(()=>{
+
+        document
+            .getElementById(
+                "aiInput"
+            )
+            .focus();
+
+    },500);
+
+}
+
+
+function focusSearch(){
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+
+    setTimeout(()=>{
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .focus();
+
+    },500);
+
+}
+
+
+function goHome(){
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function closeModal(
+    id
+){
+
+    document
+        .getElementById(
+            id
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   CLICK OUTSIDE
+========================================================= */
+
+document.addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target.classList.contains(
+                "modal"
+            )
+        ){
+
+            event.target.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(
+            event.key==="Escape"
+        ){
+
+            document
+                .querySelectorAll(
+                    ".modal"
+                )
+                .forEach(
+                    modal=>
+                        modal.classList.remove(
+                            "show"
+                        )
+                );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(()=>{
+
+        toast.classList.remove(
+            "show"
+        );
+
+    },1800);
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(
+    text
+){
+
+    return String(text)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+</script>
+
+</body>
+
+</html>
